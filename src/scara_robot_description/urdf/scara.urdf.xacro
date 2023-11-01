@@ -1,0 +1,115 @@
+<?xml version="1.0"?>
+<robot name="scara" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:include filename="scara_structure.xacro"/>
+  <xacro:include filename="materials.xacro"/>
+
+  <link name="dummy"></link>
+
+  <link name="base_link">
+    <visual>
+      <geometry>
+        <box size="${base_link_x} ${base_link_y} ${base_link_z}"/>
+      </geometry>
+      <origin xyz="0.0 0.0 ${base_link_z/2}" rpy="0.0 0.0 0.0"/>
+      <material name="blue"/>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="${base_link_x} ${base_link_y} ${base_link_z}"/>
+      </geometry>
+      <origin xyz="0.0 0.0 ${base_link_z/2}" rpy="0.0 0.0 0.0"/>
+    </collision>
+    <xacro:box_inertia mass="${base_link_mass}" h="${base_link_z}" w="${base_link_y}" d="${base_link_x}" xyz="0.0 0.0 ${base_link_z/2}" rpy="0.0 0.0 0.0"/> 
+  </link>
+
+  <joint name="dummy_joint" type="fixed">
+    <parent link="dummy"/>
+    <child link="base_link"/>
+    <origin xyz="0.0 0.0 ${base_link_z}" rpy="0.0 0.0 0.0"/>
+  </joint>
+
+  <joint name="prismatic_joint" type="prismatic">
+    <origin xyz="0.0 0.0 ${base_link_z}" rpy="0.0 0.0 0.0"/>
+    <parent link="base_link"/>
+    <child link="first_link"/>
+    <axis xyz="0.0 0.0 1.0"/>
+    <limit lower="0.0" upper="2.75" effort="10.0" velocity="2.0"/>
+    <dynamics friction="0.05" damping="0.1" />
+  </joint>
+
+
+  <link name="first_link">
+    <visual>
+      <geometry>
+        <box size="${first_link_x} ${first_link_y} ${first_link_z}"/>
+      </geometry>
+      <origin xyz="0.0 0.0 ${first_link_z/2}" rpy="0.0 0.0 0.0"/>
+      <material name="red"/>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="${first_link_x} ${first_link_y} ${first_link_z}"/>
+      </geometry>
+      <origin xyz="0.0 0.0 ${first_link_z/2}" rpy="0.0 0.0 0.0"/>
+    </collision>
+    <xacro:box_inertia mass="${first_link_mass}" h="${first_link_z}" w="${first_link_y}" d="${first_link_x}" xyz="0.0 0.0 ${first_link_z/2}" rpy="0.0 0.0 0.0"/> 
+  </link>
+
+  <joint name="first_rev_joint" type="revolute">
+    <origin xyz="0.0 ${first_link_y} ${first_link_z/2.0}" rpy="0.0 0.0 0.0"/>
+    <parent link="first_link"/>
+    <child link="second_link"/>
+    <axis xyz="0.0 0.0 1.0"/>
+    <limit lower="${-pi/2}" upper="${pi/2}" effort="10.0" velocity="2.0"/>
+    <dynamics friction="0.05" damping="0.1" />
+  </joint>
+
+
+  <link name="second_link">
+    <visual>
+      <geometry>
+        <cylinder radius="${second_link_r}" length="${second_link_l}"/>
+      </geometry>
+      <origin xyz="0.0 ${second_link_l/2} 0.0" rpy="${-pi/2} 0.0 0.0"/>
+      <material name="green"/>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder radius="${second_link_r}" length="${second_link_l}"/>
+      </geometry>
+      <origin xyz="0.0 ${second_link_l/2} 0.0" rpy="${-pi/2} 0.0 0.0"/>
+    </collision>
+    <xacro:cylinder_link_inertia mass="${second_link_mass}" length="${second_link_l}" xyz="0.0 ${second_link_l/2} 0.0" rpy="${-pi/2} 0.0 0.0"/> 
+  </link>
+
+  <joint name="second_rev_joint" type="revolute">
+    <origin xyz="0.0 ${second_link_l} 0.0" rpy="0.0 0.0 0.0"/>
+    <parent link="second_link"/>
+    <child link="third_link"/>
+    <axis xyz="0.0 0.0 1.0"/>
+    <limit lower="${-pi/2}" upper="${pi/2}" effort="10.0" velocity="2.0"/>
+    <dynamics friction="0.05" damping="0.1" />
+  </joint>
+
+
+  <link name="third_link">
+    <visual>
+      <geometry>
+        <cylinder radius="${third_link_r}" length="${third_link_l}"/>
+      </geometry>
+      <origin xyz="0.0 ${third_link_l/2} 0.0" rpy="${-pi/2} 0.0 0.0"/>
+      <material name="green"/>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder radius="${third_link_r}" length="${third_link_l}"/>
+      </geometry>
+      <origin xyz="0.0 ${third_link_l/2} 0.0" rpy="${-pi/2} 0.0 0.0"/>
+    </collision>
+    <xacro:cylinder_link_inertia mass="${third_link_mass}" length="${third_link_l}" xyz="0.0 ${third_link_l/2} 0.0" rpy="${-pi/2} 0.0 0.0"/>
+  </link>
+
+  <xacro:include filename="gazebo_specifics.xacro"/>
+
+</robot>

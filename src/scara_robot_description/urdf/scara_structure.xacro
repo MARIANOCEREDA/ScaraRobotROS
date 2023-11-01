@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:property name="base_link_x" value="0.63"/>
+  <xacro:property name="base_link_y" value="0.63"/>
+  <xacro:property name="base_link_z" value="0.62"/>
+  <xacro:property name="base_link_mass" value="30.0"/>
+
+  <xacro:property name="first_link_x" value="0.63"/>
+  <xacro:property name="first_link_y" value="0.63"/>
+  <xacro:property name="first_link_z" value="0.39"/>
+  <xacro:property name="first_link_mass" value="5.0"/>
+
+  <xacro:property name="second_link_r" value="0.17"/>
+  <xacro:property name="second_link_l" value="0.91"/>
+  <xacro:property name="second_link_mass" value="4.0"/>
+
+  <xacro:property name="third_link_r" value="0.15"/>
+  <xacro:property name="third_link_l" value="1.23"/>
+  <xacro:property name="third_link_mass" value="2.0"/>
+
+  <xacro:macro name="cylinder_link_inertia" params="mass length xyz rpy">
+    <inertial>
+      <origin xyz="${xyz}" rpy="${rpy}"/>
+      <mass value="${mass}"/>
+      <inertia ixx="${(mass/3)*(length*length)}" ixy="0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="${(mass/3)*(length*length)}"/>
+    </inertial>
+  </xacro:macro>
+
+  <xacro:macro name="box_inertia" params="mass h w d xyz rpy">
+    <inertial>
+      <origin xyz="${xyz}" rpy="${rpy}"/>
+      <mass value="${mass}"/>
+      <inertia ixx="${(mass/12)*(h*h+d*d)}" ixy="0.0" ixz="0.0" iyy="${(mass/12)*(w*w+d*d)}" iyz="0.0" izz="${(mass/12)*(w*w+h*h)}"/>
+    </inertial>
+  </xacro:macro>
+  
+</robot>
