@@ -53,26 +53,26 @@
 
     <link name="link1">
         <collision>
-            <origin xyz="0 0 ${a0/2}" rpy="0 0 0"/>
+            <origin xyz="0 0 ${a0}" rpy="0 0 0"/>
             <geometry>
                 <box size="${width} ${width} ${a0*2}"/>
             </geometry>
         </collision>
 
         <visual>
-            <origin xyz="0 0 ${a0/2}" rpy="0 0 0"/>
+            <origin xyz="0 0 ${a0}" rpy="0 0 0"/>
             <geometry>
                 <box size="${width} ${width} ${a0*2}"/>
             </geometry>
         </visual>
 
         <inertial>
-            <origin xyz="0 0 ${a0/2}" rpy="0 0 0"/>
+            <origin xyz="0 0 ${a0}" rpy="0 0 0"/>
             <mass value="${mass}"/>
             <inertia
-                ixx="${mass / 12.0 * (width*width + a0*a0)}" ixy="0.0" ixz="0.0"
+                ixx="${mass / 12.0 * (width*width + a0*a0*16)}" ixy="0.0" ixz="0.0"
                 iyy="${mass / 12.0 * (width*width + width*width)}" iyz="0.0"
-                izz="${mass / 12.0 * (width*width + a0*a0)}"/>
+                izz="${mass / 12.0 * (width*width + a0*a0*16)}"/>
         </inertial>
     </link>
 
@@ -82,24 +82,24 @@
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <axis xyz="0 0 1"/>
         <dynamics damping="0.7"/>
-        <limit lower="0.0" upper="0.5" effort="10" velocity="2"/>
+        <limit lower="0.0" upper="${a0*2}" effort="10" velocity="2"/>
     </joint>
 
     <link name="cyl0">
         <collision>
-            <origin xyz="0 0 ${a0/2}" rpy="0 0 0"/>
+            <origin xyz="0 0 ${height1/2}" rpy="0 0 0"/>
             <geometry>
                 <cylinder length = "${height1}" radius = "${radius1}"/>
             </geometry>
         </collision>
         <visual>
-            <origin xyz="0 0 ${a0/2}" rpy="0 0 0"/>
+            <origin xyz="0 0 ${height1/2}" rpy="0 0 0"/>
             <geometry>
                 <cylinder length = "${height1}" radius = "${radius1}"/>
             </geometry>
         </visual>
         <inertial>
-            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <origin xyz="0 0 ${height1/2}" rpy="0 0 0"/>
             <mass value="2"/>
             <inertia ixx="0.31" ixy="0.0" ixz="0.0" iyy="0.31" iyz="0.0" izz="0.2"/>
         </inertial>
@@ -109,7 +109,7 @@
     <joint name="joint1" type="continuous">
         <parent link="cyl0"/>
         <child link="link1_h"/>
-        <origin xyz="0 0 ${a0/2}" rpy="0 0 0"/>
+        <origin xyz="0 0 ${height1/2}" rpy="0 0 0"/>
         <axis xyz="0 0 1"/>
         <dynamics damping="0.7"/>
         <limit lower="${-pi/2}" upper="${pi/2}" effort="1000" velocity="2"/>

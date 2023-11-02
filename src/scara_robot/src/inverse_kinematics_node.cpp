@@ -1,7 +1,9 @@
 #define NODE_NAME "inverse_kinematics_node"
 #include "inverse_kinematics_node.hpp"
+#include "string.h"
 
-#define WS_TOPIC_NAME "/ws_position"
+#define WS_TOPIC_NAME "/position"
+
 
 InverseKinematicsNode::InverseKinematicsNode() : Node(NODE_NAME) {
 
@@ -22,9 +24,27 @@ void InverseKinematicsNode::WsCallback(const example_interfaces::msg::Float64Mul
     CalculateInverseKinematics(x, y, z);
 }
 
-void InverseKinematicsNode::CalculateInverseKinematics(float x, float y, float z)
+void InverseKinematicsNode::CalculateInverseKinematics(float px, float py, float pz)
 {
-    
+    float num, den, beta, alpha;
+
+    q1 = pz;
+
+    num = pow(px, 2) + pow(py, 2) - pow(robot_dim.a1, 2) + pow(robot_dim.a2, 2);
+    den = 2 * robot_dim.a1 * robot_dim.a2;
+
+    q3 = num / den;
+
+    num = robot_dim.a2 * std::sin(q3);
+    den = robot_dim.a1 + robot_dim.a2 * std::cos(q3);
+    alpha = std::acos(num) / (den);
+
+    beta = std::atan(px / (pow(px,2) + pow(py,2))); 
+
+    q2 = beta - alpha;
+
+    std::string info_msg = "{" + std::to_string(q1) + "," + std::to_string(q2) + "," + std::to_string(q1);
+    RCLCPP_INFO(this->get_logger(), info_msg.c_str());
 }
 
 void InverseKinematicsNode::PublishJoints()

@@ -14,6 +14,7 @@ find_package(example_interfaces REQUIRED)
 
 set(HEADER_FILES
   include/scara_robot/inverse_kinematics_node.hpp
+  include/scara_robot/robot_dimensions.hpp
 )
 
 add_executable(inverse_kinematics_node src/inverse_kinematics_node.cpp ${HEADER_FILES})
