@@ -11,6 +11,13 @@ include_directories(include/scara_robot)
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(example_interfaces REQUIRED)
+find_package(trajectory_msgs REQUIRED)
+
+set(ROS_LIBS
+  rclcpp
+  example_interfaces
+  trajectory_msgs
+)
 
 set(HEADER_FILES
   include/scara_robot/inverse_kinematics_node.hpp
@@ -18,7 +25,7 @@ set(HEADER_FILES
 )
 
 add_executable(inverse_kinematics_node src/inverse_kinematics_node.cpp ${HEADER_FILES})
-ament_target_dependencies(inverse_kinematics_node rclcpp example_interfaces)
+ament_target_dependencies(inverse_kinematics_node ${ROS_LIBS})
 
 install(
   TARGETS
