@@ -19,5 +19,5 @@ class InverseKinematicsNode : public rclcpp::Node
         InverseKinematicsNode();
         void WsCallback(const example_interfaces::msg::Float64MultiArray::SharedPtr position);
         void PublishJoints();
-        void CalculateInverseKinematics(float&, float&, float&);
+        void CalculateInverseKinematics(const float&,const float&,const float&);
 };

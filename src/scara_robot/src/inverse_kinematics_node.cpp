@@ -31,7 +31,7 @@ void InverseKinematicsNode::WsCallback(const example_interfaces::msg::Float64Mul
     CalculateInverseKinematics(x, y, z);
 }
 
-void InverseKinematicsNode::CalculateInverseKinematics(float& px,float& py, float& pz)
+void InverseKinematicsNode::CalculateInverseKinematics(const float& px,const float& py,const float& pz)
 {
     float num, den, beta, alpha;
 
