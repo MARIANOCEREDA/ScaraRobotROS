@@ -2,7 +2,7 @@
 #include "inverse_kinematics_node.hpp"
 #include "string.h"
 
-#define WS_TOPIC_NAME "/position"
+#define WS_TOPIC_NAME "/robot_position"
 #define JOINT_STATE_TOPIC_NAME "/set_joint_trajectory"
 
 InverseKinematicsNode::InverseKinematicsNode() : Node(NODE_NAME) {
