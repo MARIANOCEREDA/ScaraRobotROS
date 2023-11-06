@@ -24,9 +24,8 @@ class WsServerNode(Node):
         result_dict = {}
         for pair in key_value_pairs:
             key, value = pair.split(':')
-            result_dict[key] = value
+            new_msg.data.append(float(value))
 
-        new_msg.data = [float(result_dict['x']),float(result_dict['y']),float(result_dict['z'])]
         return new_msg
 
     async def echo(self, websocket):

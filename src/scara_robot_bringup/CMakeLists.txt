@@ -9,6 +9,7 @@ endif()
 find_package(ament_cmake REQUIRED)
 find_package(scara_robot_description REQUIRED)
 find_package(robot_state_publisher REQUIRED)
+find_package(scara_robot REQUIRED)
 find_package(gazebo_ros REQUIRED)
 
 install(
